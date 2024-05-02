@@ -4,14 +4,18 @@ import Tweet from "./Tweet";
 import Hashtag from "./Hashtag";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
-import { useEffet } from "react";
+import { useEffect, useState } from "react";
 
 function Home() {
+  const [tweetData, setTweetData] = useState([]);
+
   const getTweet = async () => {
     const response = await fetch("http://localhost:3000/tweets");
     const data = await response.json();
-    console.log(data);
+    setTweetData(data.data);
   };
+
+  console.log(tweetData);
 
   useEffect(() => {
     getTweet();
@@ -41,7 +45,10 @@ function Home() {
       </div>
       <div id="tweets" className="h-full w-5/12 flex flex-col">
         <Tweet />
-        <LastTweets />
+        {tweetData &&
+          tweetData.map((tweet, index) => {
+            return <LastTweets id={index} tweet={tweet} />;
+          })}
       </div>
       <Trends />
     </div>
