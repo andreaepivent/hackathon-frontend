@@ -1021,7 +1021,7 @@
     "@nextui-org/shared-utils" "2.0.5"
     "@nextui-org/use-image" "2.0.5"
 
-"@nextui-org/input@2.1.21":
+"@nextui-org/input@2.1.21", "@nextui-org/input@^2.1.21":
   version "2.1.21"
   resolved "https://registry.yarnpkg.com/@nextui-org/input/-/input-2.1.21.tgz#de519437f48ce4409da64761d37471eadf86091d"
   integrity sha512-jwTD4RnpTuieSuLOYqW7Dw2To6E9OVJtcyRBYNIT6GaejT3YG4qaST7BMKz0pJW6mgF9M+pDeKcdOvOqEbOoDg==
