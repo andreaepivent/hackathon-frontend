@@ -1,21 +1,25 @@
-import '../styles/globals.css';
-import Head from 'next/head';
+import "../styles/globals.css";
+import Head from "next/head";
 
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { NextUIProvider } from "@nextui-org/react";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
- reducer: {},
+  reducer: {},
 });
 
 function App({ Component, pageProps }) {
   return (
-    <Provider store={store}>
-      <Head>
-        <title>Next.js App</title>
-      </Head>
-      <Component {...pageProps} />
-    </Provider>
+    <NextUIProvider>
+      <Provider store={store}>
+        <Head>
+          <title>Hackatweet</title>
+          <link rel="icon" href="favicon.png" />
+        </Head>
+        <Component {...pageProps} />
+      </Provider>
+    </NextUIProvider>
   );
 }
 
