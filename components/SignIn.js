@@ -33,7 +33,7 @@ function SignIn({ isOpen, onOpenChange }) {
         console.log(data);
         if (data.result) {
           console.log(data);
-          window.location.assign("tweet.html");
+          window.location.assign("home");
         }
       });
   }

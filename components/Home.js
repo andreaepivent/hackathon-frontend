@@ -4,6 +4,7 @@ import Tweet from "./Tweet";
 import Hashtag from "./Hashtag";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { useEffet } from "react";
 
 function Home() {
   const getTweet = async () => {

@@ -34,7 +34,7 @@ function SignUp({ isOpen, onOpenChange }) {
       .then((data) => {
         console.log(data);
         if (data.result) {
-          window.location.assign("tweet.html");
+          window.location.assign("home");
         }
       });
   }
