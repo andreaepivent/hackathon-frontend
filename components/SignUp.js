@@ -75,6 +75,7 @@ function SignUp({ isOpen, onOpenChange }) {
               className="w-1/2 h-6 mb-6"
               key={"inside"}
               label="Password"
+              onChange={(e) => setPassword(e.target.value)}
               endContent={
                 <button
                   className="focus:outline-none"
