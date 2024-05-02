@@ -18,25 +18,36 @@ function Login() {
   return (
     <>
       <div className="flex justify-center items-center w-screen h-screen">
-        <div className="bg-light bg-no-repeat bg-cover w-5/12 h-full flex justify-center items-center">
+        <div className="bg-light bg-no-repeat object-center w-5/12 h-full flex justify-center items-center">
           <img src="logo.png" className="rotate-180 w-64" />
         </div>
-        <div className="bg-[#15202b] w-7/12 h-full">
-          <div className="flex flex-col pl-8 pt-8 w-1/2">
-            <img src="logo.png" className="rotate-180 w-16 mb-4 lg:mb-12" />
-            <h1 className="font-montheavy text-white text-lg lg:text-5xl mb-4 lg:mb-8 tracking-wide leading-relaxed">
+        <div className="bg-[#15202b] w-7/12 h-screen mx-auto">
+          <div className="mt-16 flex items-center flex-col pt-8 w-80 md:ml-20 lg:pl-8 lg:w-2/3 lg:items-start">
+            <img
+              src="logo.png"
+              className="rotate-180 mx-auto w-16 mb-4 lg:mb-6 lg:mx-0"
+            />
+            <h1 className="font-montheavy text-center text-slate-100 text-4xl mt-6 lg:text-5xl mb-4 lg:mb-8 tracking-wide leading-relaxed lg:text-left">
               See what's <span>happening</span>
             </h1>
-            <h2 className="font-montheavy text-white text-sm lg:text-2xl mb-4">
+            <h2 className="font-montheavy text-slate-100 text-base lg:text-2xl mb-4">
               Join Hackatweet today.
             </h2>
-            <Button color="primary" className="w-1/2" onPress={onOpenSignUp}>
+            <Button
+              color="primary"
+              className="w-2/3 xl:w-1/2"
+              onPress={onOpenSignUp}
+            >
               Sign up
             </Button>
-            <p className="font-montheavy text-white text-xs lg:text-sm mb-4 mt-4">
+            <p className="font-montheavy text-slate-100 text-base lg:text-sm mb-4 mt-4">
               Already have an account?
             </p>
-            <Button color="primary" className="w-1/2" onPress={onOpenSignIn}>
+            <Button
+              color="primary"
+              className="w-2/3 xl:w-1/2"
+              onPress={onOpenSignIn}
+            >
               Sign in
             </Button>
           </div>
