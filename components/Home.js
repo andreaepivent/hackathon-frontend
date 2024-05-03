@@ -5,9 +5,12 @@ import Hashtag from "./Hashtag";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 
 function Home() {
   const [tweetData, setTweetData] = useState([]);
+  const user = useSelector((state) => state.user.value);
+  console.log(user);
 
   const getTweet = async () => {
     const response = await fetch("http://localhost:3000/tweets");
@@ -32,10 +35,10 @@ function Home() {
         </Link>
         <div>
           <div id="profil" className="flex mb-4">
-            <img src="profilepic.png" className="w-12 mr-2 rounded-full" />
+            <img src={user.picture} className="w-12 mr-2 rounded-full" />
             <div className="flex flex-col justify-center">
-              <p className="font-bold">Elias le Boss</p>
-              <p className="text-[#6a7783]">@PetitBoss</p>
+              <p className="font-bold">{user.firstname}</p>
+              <p className="text-[#6a7783]">@{user.username}</p>
             </div>
           </div>
           <Button color="primary" className="w-1/3" size="sm">

@@ -10,8 +10,11 @@ import { Input } from "@nextui-org/input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/user';
 
 function SignIn({ isOpen, onOpenChange }) {
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const [username, setUsername] = useState("");
@@ -33,7 +36,8 @@ function SignIn({ isOpen, onOpenChange }) {
         console.log(data);
         if (data.result) {
           console.log(data);
-          window.location.assign("home");
+          dispatch(login({token:data.data.token, username:data.data.username, firstname: data.data.firstname, picture: data.data.picture}));
+          //window.location.assign("home");
         }
       });
   }
