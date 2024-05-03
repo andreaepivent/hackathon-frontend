@@ -3,22 +3,32 @@ import Trends from "./Trends";
 import Tweet from "./Tweet";
 import Hashtag from "./Hashtag";
 import { Button } from "@nextui-org/button";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logout } from '../reducers/user';
+import { searchOff } from '../reducers/searchHashtags';
 
 function Home() {
   const dispatch = useDispatch();
   const [tweetData, setTweetData] = useState([]);
   const user = useSelector((state) => state.user.value);
-  console.log(user);
+  const searchHashtags = useSelector((state) => state.searchHashtags.value);
 
   const getTweet = async () => {
-    const response = await fetch("http://localhost:3000/tweets");
-    const data = await response.json();
-    setTweetData(data.data);
+    // Si on est pas en mode recherche de hashtags
+    if (!searchHashtags.status) {
+      const response = await fetch("http://localhost:3000/tweets");
+      const data = await response.json();
+      setTweetData(data.data);
+    }
+    // Sinon
+    else {
+      const hashtag = searchHashtags.hashtag.replace('#','');
+      const response = await fetch(`http://localhost:3000/hashtags/${hashtag}`);
+      const data = await response.json();
+      data && setTweetData(data.data);
+    }
   };
 
   const handleLogout = () => {
@@ -27,11 +37,11 @@ function Home() {
     dispatch(logout());
   }
 
-  console.log(tweetData);
+  //console.log(tweetData);
 
   useEffect(() => {
     getTweet();
-  }, []);
+  }, [tweetData]);
 
   return (
     <div className="bg-[#15202b] h-screen flex">
@@ -39,9 +49,7 @@ function Home() {
         id="nav"
         className="h-full w-3/12 border-r border-[#2f3943] flex flex-col justify-between p-4"
       >
-        <Link href="/home">
-          <img src="logo.png" className="rotate-180 w-16 cursor-pointer" />
-        </Link>
+          <img src="logo.png" className="rotate-180 w-16 cursor-pointer" onClick={() => dispatch(searchOff())}/>
         <div>
           <div id="profil" className="flex mb-4">
             <img src={user.picture} className="w-12 mr-2 rounded-full" />
@@ -56,7 +64,7 @@ function Home() {
         </div>
       </div>
       <div id="tweets" className="h-full w-5/12 flex flex-col">
-        <Tweet />
+        {searchHashtags.status ? <Hashtag /> : <Tweet />}
         {tweetData &&
           tweetData.map((tweet, index) => {
             return <LastTweets id={index} tweet={tweet} />;
