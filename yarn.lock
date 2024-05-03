@@ -1375,24 +1375,9 @@
     "@nextui-org/shared-utils" "2.0.5"
     "@nextui-org/system-rsc" "2.1.1"
 
-"@nextui-org/switch@2.0.28":
+"@nextui-org/switch@2.0.28", "@nextui-org/switch@^2.0.28":
   version "2.0.28"
   resolved "https://registry.npmjs.org/@nextui-org/switch/-/switch-2.0.28.tgz"
-  integrity sha512-cogzyB7Ng95WP/neMBWgOLRkw2GC/qLQoW0gTuuT53lTEnAtatFikNoL30CyA/EZzz7YsUjLH2W+9kBiZLtITQ==
-  dependencies:
-    "@nextui-org/react-utils" "2.0.13"
-    "@nextui-org/shared-utils" "2.0.5"
-    "@react-aria/focus" "^3.16.2"
-    "@react-aria/interactions" "^3.21.1"
-    "@react-aria/switch" "^3.6.2"
-    "@react-aria/utils" "^3.23.2"
-    "@react-aria/visually-hidden" "^3.8.10"
-    "@react-stately/toggle" "^3.7.2"
-    "@react-types/shared" "^3.22.1"
-
-"@nextui-org/switch@^2.0.28":
-  version "2.0.28"
-  resolved "https://registry.yarnpkg.com/@nextui-org/switch/-/switch-2.0.28.tgz#b0a7fd1ac58abd584b62ef3aeee41c2b882ccff7"
   integrity sha512-cogzyB7Ng95WP/neMBWgOLRkw2GC/qLQoW0gTuuT53lTEnAtatFikNoL30CyA/EZzz7YsUjLH2W+9kBiZLtITQ==
   dependencies:
     "@nextui-org/react-utils" "2.0.13"

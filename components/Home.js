@@ -12,6 +12,7 @@ import { searchOff } from "../reducers/searchHashtags";
 function Home() {
   const dispatch = useDispatch();
   const [tweetData, setTweetData] = useState([]);
+  const [likers, setLikers] = useState([]);
   const user = useSelector((state) => state.user.value);
   const searchHashtags = useSelector((state) => state.searchHashtags.value);
 
@@ -44,6 +45,19 @@ function Home() {
   if (!user.token) {
     window.location.assign("http://localhost:3001/");
   }
+
+  const updateLikes = (tweetId, newLikers) => {
+    setTweetData(currentTweets =>
+      currentTweets.map(tweet =>
+        tweet._id === tweetId ? { ...tweet, likers: newLikers } : tweet
+      )
+    );
+  };
+
+  const handleDeleteTweet = async (tweetId) => {
+    const response = await fetch(`http://localhost:3000/tweets/${tweetId}`, { method: "DELETE" });
+    if (response.ok) getTweet(); // Refresh tweets after deletion
+  };
 
   return (
     <div className="h-full w-full flex dark:bg-[#1d2732] bg-[#e7e3e3]">
@@ -84,7 +98,7 @@ function Home() {
             .sort((a, b) => new Date(b.time) - new Date(a.time))
             .map((tweet, index) => {
               return (
-                <LastTweets id={index} tweet={tweet} getTweet={getTweet} />
+                <LastTweets id={index} tweet={tweet} updateLikes={updateLikes} deleteTweet={handleDeleteTweet} />
               );
             })}
       </div>

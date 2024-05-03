@@ -7,10 +7,8 @@ var relativeTime = require("dayjs/plugin/relativeTime");
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-function LastTweets({ tweet, getTweet }) {
-  const [likers, setLikers] = useState([]);
+function LastTweets({  tweet, updateLikes, deleteTweet  }) {
   const user = useSelector((state) => state.user.value);
-  console.log(tweet);
 
   dayjs.locale("fr");
   dayjs.extend(AdvancedFormat);
@@ -34,47 +32,26 @@ function LastTweets({ tweet, getTweet }) {
     });
   }
 
-  function handleDelete() {
-    const tweetId = tweet._id;
-    fetch(`http://localhost:3000/tweets/${tweetId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Tweet supprimé, tchao !");
-        getTweet();
-      });
-  }
-
   function likeTweet() {
-    const tweetId = tweet._id;
-    fetch(`http://localhost:3000/tweets/like/${tweetId}`, {
+    fetch(`http://localhost:3000/tweets/like/${tweet._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify({}),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.result) {
-          setLikers(data.likers);
-        }
-      })
-      .catch((err) => console.log(err));
+    .then(response => response.json())
+    .then(data => {
+      if (data.result) {
+        updateLikes(tweet._id, data.likers);
+      }
+    })
+    .catch(err => console.log(err));
   }
-
   useEffect(() => {
     // Récupérer le nombre de likes à chaque initialisation
     likeTweet();
   }, []);
-
-  let heartIconStyle = likers.includes(user.id) ? { color: "#e74c3c" } : {};
 
   return (
     <div
@@ -107,17 +84,17 @@ function LastTweets({ tweet, getTweet }) {
         <div className="flex items-center text-sm ">
           <FontAwesomeIcon
             icon={faHeart}
-            style={heartIconStyle}
+            style={{ color: tweet.likers.includes(user.id) ? "#e74c3c" : undefined }}
             className="w-3 h-3 mr-1 cursor-pointer "
             onClick={() => likeTweet()}
           />
-          <p className="mr-2">{likers.length}</p>
+          <p className="mr-2">{tweet.likers.length}</p>
 
           {tweet.user._id === user.id && (
             <FontAwesomeIcon
               icon={faTrashCan}
               className="w-3 h-3 cursor-pointer"
-              onClick={() => handleDelete()}
+              onClick={() => deleteTweet(tweet._id)}
             />
           )}
         </div>
