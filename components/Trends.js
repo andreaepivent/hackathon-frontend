@@ -1,4 +1,25 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { searchOn } from '../reducers/searchHashtags';
+
 function Trends() {
+  const dispatch = useDispatch();
+  const [hashtags, setHashtags] = useState([]);
+
+  // Chargement de tous les hashtags, à actualiser dès qu'un nouveau tweet est envoyé /!\
+  useEffect(() => {
+    fetch("http://localhost:3000/hashtags")
+      .then((response) => response.json())
+      .then((data) => {
+        setHashtags(data.hashtags);
+      });
+  }, []);
+
+  // Récupération des tweets liés à un certain hashtag
+  function fetchTweetFromHashtag(hashtag) {
+    dispatch(searchOn(hashtag));
+  }
+
   return (
     <div
       id="trends"
@@ -6,20 +27,20 @@ function Trends() {
     >
       <h1 className="font-bold mb-4">Trends</h1>
 
-      <div className="bg-[#1d2732] rounded-md text-sm flex flex-col">
-        <div className="p-3 rounded-t-md cursor-pointer hover:bg-[#283444]">
-          <p className="font-bold mb-2">#hackatweet</p>
-          <p className="text-xs text-[#6a7783]">2 tweets</p>
-        </div>
-        <div className="p-3 cursor-pointer hover:bg-[#283444]">
-          <p className="font-bold mb-2">#feminism</p>
-          <p className="text-xs text-[#6a7783]">5 tweets</p>
-        </div>
-        <div className="p-3 rounded-b-md cursor-pointer hover:bg-[#283444]">
-          <p className="font-bold mb-2">#tech</p>
-          <p className="text-xs text-[#6a7783]">1 tweet</p>
-        </div>
-      </div>
+      {hashtags && <div className="bg-[#1d2732] rounded-md text-sm flex flex-col">
+        {hashtags.map((item, index) => (
+          <div
+            key={index}
+            className={`p-3 ${index === 0 ? "rounded-t-md" : ""} ${
+              index === hashtags.length - 1 ? "rounded-b-md" : ""
+            } cursor-pointer hover:bg-[#283444]`}
+            onClick={() => fetchTweetFromHashtag(item.hashtag)}
+          >
+            <p className="font-bold mb-2">{item.hashtag}</p>
+            <p className="text-xs text-[#6a7783]">{item.occurrence} tweets</p>
+          </div>
+        ))}
+      </div>}
     </div>
   );
 }
