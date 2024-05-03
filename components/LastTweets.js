@@ -1,28 +1,90 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+const dayjs = require("dayjs");
+var AdvancedFormat = require("dayjs/plugin/advancedFormat");
+var relativeTime = require("dayjs/plugin/relativeTime");
+// import "dayjs/locale/fr";
 
 function LastTweets({ tweet }) {
-  console.log(tweet);
+  dayjs.locale("fr");
+  dayjs.extend(AdvancedFormat);
+  dayjs.extend(relativeTime);
+
+  function formatContent(content) {
+    const words = content.split(/(\s+)/);
+    return words.map((word, index) => {
+      if (word.startsWith("#") && word.length > 1) {
+        return (
+          <span
+            key={index}
+            className="text-blue-500 hover:underline cursor-pointer"
+          >
+            {word}
+          </span>
+        );
+      } else {
+        return word;
+      }
+    });
+  }
+
+  function fetchSignupData() {
+    setLoader(true);
+    const connectionData = {
+      username: username,
+      firstname: firstname,
+      password: password,
+    };
+
+    fetch(`http://localhost:3000//like/${tweet.user._id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(connectionData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.result) {
+        }
+      });
+  }
+
   return (
     <div id="allTweets" className="h-full border-b border-[#2f3943]">
       <div className="border-b border-[#2f3943] p-4">
         <div className="flex mb-4 items-center">
           <img
             src={`${tweet.user.picture}`}
-            className="w-12 mr-2 rounded-full"
+            className="w-12 mr-2 rounded-full cursor-pointer"
           />
-          <p className="font-bold mr-1">{tweet.firstname}</p>
-          <p className="text-[#6a7783] mr-1">{tweet.username}</p>
-          <p className="text-[#6a7783] mr-1">·</p>
-          <p className="text-[#6a7783]">a few seconds ago</p>
+          <p className="text-slate-100 mr-1 cursor-pointer">
+            {tweet.user.firstname}{" "}
+            <span className="text-gray-400 hover:underline ">
+              @{tweet.user.username}
+            </span>
+          </p>
+
+          <p className="text-gray-500 ml-1">
+            <span className="mr-1">.</span>
+            <span className="hover:underline cursor-pointer">
+              {dayjs().to(dayjs(tweet.time))}
+            </span>
+          </p>
         </div>
         <div className="mb-4">
-          <p>{tweet.content}</p>
+          <p>{formatContent(tweet.content)}</p>
         </div>
-        <div className="flex items-center text-sm">
-          <FontAwesomeIcon icon={faHeart} className="w-3 h-3 mr-1" />
+        <div className="flex items-center text-sm ">
+          <FontAwesomeIcon
+            icon={faHeart}
+            className="w-3 h-3 mr-1 cursor-pointer "
+            onClick={(e) => console.log(tweet.user._id)}
+          />
           <span className="mr-2">{tweet.likers}</span>
-          <FontAwesomeIcon icon={faTrashCan} className="w-3 h-3" />
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            className="w-3 h-3 cursor-pointer "
+          />
         </div>
       </div>
     </div>

@@ -1,13 +1,12 @@
 import LastTweets from "./LastTweets";
 import Trends from "./Trends";
 import Tweet from "./Tweet";
-import Hashtag from "./Hashtag";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { logout } from '../reducers/user';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logout } from "../reducers/user";
 
 function Home() {
   const dispatch = useDispatch();
@@ -25,7 +24,7 @@ function Home() {
     // Retour à la page d'accueil
     window.location.assign("http://localhost:3001/");
     dispatch(logout());
-  }
+  };
 
   console.log(tweetData);
 
@@ -50,7 +49,12 @@ function Home() {
               <p className="text-[#6a7783]">@{user.username}</p>
             </div>
           </div>
-          <Button color="primary" className="w-1/3" size="sm" onClick={() => handleLogout()}>
+          <Button
+            color="primary"
+            className="w-1/3"
+            size="sm"
+            onClick={() => handleLogout()}
+          >
             Logout
           </Button>
         </div>

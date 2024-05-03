@@ -17,7 +17,6 @@ function Tweet() {
 
       <div className="w-5/6 m-auto">
         <textarea
-          className="resize"
           placeholder="What's up ?"
           onChange={handleChange}
           maxLength={280}
