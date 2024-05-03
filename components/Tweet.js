@@ -1,11 +1,35 @@
 import { Button } from "@nextui-org/button";
+//import { user } from "@nextui-org/theme";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function Tweet() {
   const [text, setText] = useState("");
+  const user = useSelector((state) => state.user.value);
 
   const handleChange = (event) => {
     setText(event.target.value);
+  };
+
+  const handlePost = () => {
+    const regex = /#\w+/g;
+    const hashtag = text.match(regex);
+    console.log(hashtag);
+    console.log(user.token);
+
+    fetch(`http://localhost:3000/tweets/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ content: text, hashtag }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Emballé c'est tweeté !");
+        setText("");
+      });
   };
 
   return (
@@ -24,7 +48,12 @@ function Tweet() {
         ></textarea>
         <div className="flex items-center justify-end">
           <p className="text-xs mr-4">{text.length}/280</p>
-          <Button color="primary" className="w-1/5" size="sm">
+          <Button
+            color="primary"
+            className="w-1/5"
+            size="sm"
+            onClick={() => handlePost()}
+          >
             Tweet
           </Button>
         </div>
