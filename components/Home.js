@@ -1,6 +1,7 @@
 import LastTweets from "./LastTweets";
 import Trends from "./Trends";
 import Tweet from "./Tweet";
+import Hashtag from "./Hashtag";
 import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -40,7 +41,7 @@ function Home() {
 
   useEffect(() => {
     getTweet();
-  }, [tweetData]);
+  }, [searchHashtags]);
 
   return (
     <div className="bg-[#15202b] h-screen flex">
