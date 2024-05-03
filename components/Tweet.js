@@ -41,7 +41,7 @@ function Tweet({ getTweet }) {
       id="addTweet"
       className="h-2/6 border-b border-[#2f3943] p-4 text-base dark:bg-[#1d2732] bg-[#e7e3e3]"
     >
-      <h1 className="font-bold mb-8">Home</h1>
+      <h1 className="font-bold mb-8 dark:text-slate-100 text-black">Home</h1>
 
       <div className="w-5/6 m-auto">
         <textarea
@@ -52,7 +52,9 @@ function Tweet({ getTweet }) {
           className="bg-inherit text-[#6a7783] border-b border-[#6a7783] w-full max-h-10"
         ></textarea>
         <div className="flex items-center justify-end">
-          <p className="text-xs mr-4">{text.length}/280</p>
+          <p className="text-xs mr-4 dark:text-slate-100 text-black">
+            {text.length}/280
+          </p>
           <Button
             color="primary"
             className="w-1/5"

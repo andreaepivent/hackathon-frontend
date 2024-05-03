@@ -60,7 +60,9 @@ function Home() {
           <div id="profil" className="flex md:ml-6 mb-4  min-w-20">
             <img src={user.picture} className="w-12 mr-2 rounded-full" />
             <div className="flex flex-col justify-center">
-              <p className="font-bold">{user.firstname}</p>
+              <p className="font-bold dark:text-slate-100 text-black">
+                {user.firstname}
+              </p>
               <p className="text-[#6a7783]">@{user.username}</p>
             </div>
           </div>
