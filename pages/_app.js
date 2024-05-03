@@ -9,8 +9,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import user from "../reducers/user";
 import searchHashtags from "../reducers/searchHashtags";
+import like from "../reducers/like";
 
-const reducers = combineReducers({ user, searchHashtags });
+const reducers = combineReducers({ user, searchHashtags, like });
 const persistConfig = { key: "applicationName", storage };
 
 const store = configureStore({

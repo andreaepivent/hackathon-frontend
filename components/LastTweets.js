@@ -5,11 +5,14 @@ var AdvancedFormat = require("dayjs/plugin/advancedFormat");
 var relativeTime = require("dayjs/plugin/relativeTime");
 // import "dayjs/locale/fr";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { like, dislike } from "../reducers/like";
 
 function LastTweets({ tweet }) {
-  const [like, setLike] = useState(false);
-  const [likers, setLikers] = useState("");
-  const [likedTweet, setLikedTweet] = useState([]);
+  const [likers, setLikers] = useState([]);
+  const [likersList, setlikersList] = useState([]);
+  const dispatch = useDispatch();
+  const likes = useSelector((state) => state.like.value);
 
   dayjs.locale("fr");
   dayjs.extend(AdvancedFormat);
@@ -35,6 +38,12 @@ function LastTweets({ tweet }) {
 
   function fetchSignupData() {
     const tweetId = tweet._id;
+    const isLiked = likes.some((item) => item.id === tweetId);
+    if (isLiked) {
+      dispatch(dislike({ id: tweetId }));
+    } else {
+      dispatch(like({ id: tweetId }));
+    }
     fetch(`http://localhost:3000/tweets/like/${tweetId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,26 +52,27 @@ function LastTweets({ tweet }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          setLikedTweet(data.likers);
-
-          isLiked();
+          setLikers(data.likers);
+          console.log(data.user);
+          getLikers();
         }
       })
       .catch((err) => console.log(err));
   }
 
-  function isLiked() {
-    if (likedTweet.length > 0) {
-      setLikedTweet(likedTweet.filter((tweet) => tweet !== likers));
-    } else {
-      setLikedTweet([likers]);
-    }
-  }
+  const getLikers = async () => {
+    const tweetId = tweet._id;
+    const response = await fetch(
+      `http://localhost:3000/tweets/likers/${tweetId}`
+    );
+    const data = await response.json();
+    setlikersList(data.likers);
+    console.log(likersList);
+  };
 
-  let heartIconStyle;
-  if (like) {
-    heartIconStyle = { color: "#e74c3c" };
-  }
+  let heartIconStyle = likes.some((item) => item.id === tweet._id)
+    ? { color: "#e74c3c" }
+    : {};
 
   return (
     <div id="allTweets" className="h-full border-b border-[#2f3943]">
@@ -96,7 +106,7 @@ function LastTweets({ tweet }) {
             className="w-3 h-3 mr-1 cursor-pointer "
             onClick={fetchSignupData}
           />
-          <p className="mr-2">{likedTweet.length}</p>
+          <p className="mr-2">{likersList.length}</p>
 
           <FontAwesomeIcon
             icon={faTrashCan}
