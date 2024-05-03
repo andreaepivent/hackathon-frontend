@@ -7,7 +7,7 @@ var relativeTime = require("dayjs/plugin/relativeTime");
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-function LastTweets({ tweet }) {
+function LastTweets({ tweet, getTweet }) {
   const [likers, setLikers] = useState([]);
   const user = useSelector((state) => state.user.value);
   console.log(tweet);
@@ -40,13 +40,13 @@ function LastTweets({ tweet }) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Tweet supprimé, tchao !")
-    })
-
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Tweet supprimé, tchao !");
+        getTweet();
+      });
   }
 
   function likeTweet() {
@@ -55,7 +55,7 @@ function LastTweets({ tweet }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${user.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify({}),
     })
@@ -72,11 +72,9 @@ function LastTweets({ tweet }) {
   useEffect(() => {
     // Récupérer le nombre de likes à chaque initialisation
     likeTweet();
-  }, [])
+  }, []);
 
-  let heartIconStyle = likers.includes(user.id)
-    ? { color: "#e74c3c" }
-    : {};
+  let heartIconStyle = likers.includes(user.id) ? { color: "#e74c3c" } : {};
 
   return (
     <div id="allTweets" className="h-full border-b border-[#2f3943]">
@@ -112,11 +110,13 @@ function LastTweets({ tweet }) {
           />
           <p className="mr-2">{likers.length}</p>
 
-          {tweet.user._id === user.id && <FontAwesomeIcon
-            icon={faTrashCan}
-            className="w-3 h-3 cursor-pointer"
-            onClick={() => handleDelete()}
-          />}
+          {tweet.user._id === user.id && (
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              className="w-3 h-3 cursor-pointer"
+              onClick={() => handleDelete()}
+            />
+          )}
         </div>
       </div>
     </div>

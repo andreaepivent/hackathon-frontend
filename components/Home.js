@@ -83,7 +83,9 @@ function Home() {
           tweetData
             .sort((a, b) => new Date(b.time) - new Date(a.time))
             .map((tweet, index) => {
-              return <LastTweets id={index} tweet={tweet} />;
+              return (
+                <LastTweets id={index} tweet={tweet} getTweet={getTweet} />
+              );
             })}
       </div>
       <Trends getTweet={getTweet} />
