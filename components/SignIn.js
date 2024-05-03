@@ -37,7 +37,7 @@ function SignIn({ isOpen, onOpenChange }) {
         if (data.result) {
           console.log(data);
           dispatch(login({token:data.data.token, username:data.data.username, firstname: data.data.firstname, picture: data.data.picture}));
-          //window.location.assign("home");
+          window.location.assign("home");
         }
       });
   }
