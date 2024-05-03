@@ -4,11 +4,19 @@ const dayjs = require("dayjs");
 var AdvancedFormat = require("dayjs/plugin/advancedFormat");
 var relativeTime = require("dayjs/plugin/relativeTime");
 // import "dayjs/locale/fr";
+import { useState, useEffect } from "react";
 
 function LastTweets({ tweet }) {
+  const [like, setLike] = useState(false);
+  const [nbLike, setNbLike] = useState(0);
+
   dayjs.locale("fr");
   dayjs.extend(AdvancedFormat);
   dayjs.extend(relativeTime);
+
+  useEffect(() => {
+    setNbLike(tweet.likers.length);
+  }, [nbLike, like]);
 
   function formatContent(content) {
     const words = content.split(/(\s+)/);
@@ -29,12 +37,13 @@ function LastTweets({ tweet }) {
   }
 
   function fetchSignupData() {
-    const userId = tweet.user._id;
+    const tweetId = tweet._id;
+    setLike(!like);
 
-    fetch(`http://localhost:3000/tweets/like/${tweet.user._id}`, {
+    fetch(`http://localhost:3000/tweets/like/${tweetId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userId),
+      body: JSON.stringify({ tweetId: tweetId }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -42,7 +51,13 @@ function LastTweets({ tweet }) {
         if (data.result) {
           console.log(data.result);
         }
-      });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  let heartIconStyle;
+  if (like) {
+    heartIconStyle = { color: "#e74c3c" };
   }
 
   return (
@@ -73,10 +88,12 @@ function LastTweets({ tweet }) {
         <div className="flex items-center text-sm ">
           <FontAwesomeIcon
             icon={faHeart}
+            style={heartIconStyle}
             className="w-3 h-3 mr-1 cursor-pointer "
             onClick={fetchSignupData}
           />
-          <span className="mr-2">{tweet.likers}</span>
+          <p>{nbLike}</p>
+
           <FontAwesomeIcon
             icon={faTrashCan}
             className="w-3 h-3 cursor-pointer "
