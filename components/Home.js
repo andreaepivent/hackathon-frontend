@@ -46,7 +46,7 @@ function Home() {
   }
 
   return (
-    <div className="bg-[#15202b] h-full w-full flex">
+    <div className="h-full w-full flex">
       <div
         id="nav"
         className="h-screen w-3/12 border-r border-[#2f3943] flex flex-col justify-between p-4"
@@ -86,7 +86,7 @@ function Home() {
               return <LastTweets id={index} tweet={tweet} />;
             })}
       </div>
-      <Trends />
+      <Trends getTweet={getTweet} />
     </div>
   );
 }
