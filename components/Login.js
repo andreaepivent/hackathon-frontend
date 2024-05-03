@@ -36,7 +36,7 @@ function Login() {
           <div className="mt-16 flex items-center flex-col pt-8 w-80 md:ml-20 lg:pl-8 lg:w-2/3 lg:items-start">
             <img
               src="logo.png"
-              className="hidden rotate-180 mx-auto w-16 mb-4 lg:mb-6 lg:mx-0 dark:block"
+              className="rotate-180 mx-auto w-16 mb-4 lg:mb-6 lg:mx-0 "
             />
             <h1 className="font-montheavy text-center dark:text-slate-100 text-slate-800 text-4xl mt-6 lg:text-5xl mb-4 lg:mb-8 tracking-wide leading-relaxed lg:text-left">
               See what's <span>happening</span>
