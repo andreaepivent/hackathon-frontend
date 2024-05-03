@@ -8,15 +8,12 @@ import { useState, useEffect } from "react";
 
 function LastTweets({ tweet }) {
   const [like, setLike] = useState(false);
-  const [nbLike, setNbLike] = useState(0);
+  const [likers, setLikers] = useState("");
+  const [likedTweet, setLikedTweet] = useState([]);
 
   dayjs.locale("fr");
   dayjs.extend(AdvancedFormat);
   dayjs.extend(relativeTime);
-
-  useEffect(() => {
-    setNbLike(tweet.likers.length);
-  }, [nbLike, like]);
 
   function formatContent(content) {
     const words = content.split(/(\s+)/);
@@ -38,8 +35,6 @@ function LastTweets({ tweet }) {
 
   function fetchSignupData() {
     const tweetId = tweet._id;
-    setLike(!like);
-
     fetch(`http://localhost:3000/tweets/like/${tweetId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -47,12 +42,21 @@ function LastTweets({ tweet }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.result) {
-          console.log(data.result);
+          setLikedTweet(data.likers);
+
+          isLiked();
         }
       })
       .catch((err) => console.log(err));
+  }
+
+  function isLiked() {
+    if (likedTweet.length > 0) {
+      setLikedTweet(likedTweet.filter((tweet) => tweet !== likers));
+    } else {
+      setLikedTweet([likers]);
+    }
   }
 
   let heartIconStyle;
@@ -92,7 +96,7 @@ function LastTweets({ tweet }) {
             className="w-3 h-3 mr-1 cursor-pointer "
             onClick={fetchSignupData}
           />
-          <p>{nbLike}</p>
+          <p className="mr-2">{likedTweet.length}</p>
 
           <FontAwesomeIcon
             icon={faTrashCan}
