@@ -29,22 +29,18 @@ function LastTweets({ tweet }) {
   }
 
   function fetchSignupData() {
-    setLoader(true);
-    const connectionData = {
-      username: username,
-      firstname: firstname,
-      password: password,
-    };
+    const userId = tweet.user._id;
 
-    fetch(`http://localhost:3000//like/${tweet.user._id}`, {
+    fetch(`http://localhost:3000/tweets/like/${tweet.user._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(connectionData),
+      body: JSON.stringify(userId),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         if (data.result) {
+          console.log(data.result);
         }
       });
   }
@@ -78,7 +74,7 @@ function LastTweets({ tweet }) {
           <FontAwesomeIcon
             icon={faHeart}
             className="w-3 h-3 mr-1 cursor-pointer "
-            onClick={(e) => console.log(tweet.user._id)}
+            onClick={fetchSignupData}
           />
           <span className="mr-2">{tweet.likers}</span>
           <FontAwesomeIcon
