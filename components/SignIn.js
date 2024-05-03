@@ -46,6 +46,7 @@ function SignIn({ isOpen, onOpenChange }) {
           dispatch(
             login({
               token: data.data.token,
+              id: data.data._id,
               username: data.data.username,
               firstname: data.data.firstname,
               picture: data.data.picture,
