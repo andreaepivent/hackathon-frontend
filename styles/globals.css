@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'mont-heavy';
-  src: url('/mont-heavy.ttf') format('truetype');
+  font-family: "mont-heavy";
+  src: url("/mont-heavy.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -12,13 +12,14 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: Verdana, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Verdana, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: #15202b;
-  color:white;
-  font-size:13px;
+  color: white;
+  font-size: 13px;
 }
 
 * {
   box-sizing: border-box;
+  background-color: #15202b;
 }

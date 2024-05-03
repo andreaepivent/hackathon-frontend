@@ -1,10 +1,11 @@
 import { Button } from "@nextui-org/button";
 //import { user } from "@nextui-org/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-function Tweet() {
+function Tweet({ getTweet }) {
   const [text, setText] = useState("");
+  const [newPost, setNewPost] = useState(false);
   const user = useSelector((state) => state.user.value);
 
   const handleChange = (event) => {
@@ -12,6 +13,8 @@ function Tweet() {
   };
 
   const handlePost = () => {
+    setText("");
+    setNewPost();
     const regex = /#\w+/g;
     const hashtag = text.match(regex);
     console.log(hashtag);
@@ -21,13 +24,14 @@ function Tweet() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${user.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify({ content: text, hashtag }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log("Emballé c'est tweeté !");
+        getTweet();
         setText("");
       });
   };
@@ -43,6 +47,7 @@ function Tweet() {
         <textarea
           placeholder="What's up ?"
           onChange={handleChange}
+          value={text}
           maxLength={280}
           className="bg-inherit text-[#6a7783] border-b border-[#6a7783] w-full max-h-10"
         ></textarea>

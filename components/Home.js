@@ -37,8 +37,6 @@ function Home() {
     dispatch(logout());
   };
 
-  //console.log(tweetData);
-
   useEffect(() => {
     getTweet();
   }, [searchHashtags]);
@@ -51,7 +49,7 @@ function Home() {
     <div className="bg-[#15202b] h-full w-full flex">
       <div
         id="nav"
-        className="h-full w-3/12 border-r border-[#2f3943] flex flex-col justify-between p-4"
+        className="h-screen w-3/12 border-r border-[#2f3943] flex flex-col justify-between p-4"
       >
         <img
           src="logo.png"
@@ -59,7 +57,7 @@ function Home() {
           onClick={() => dispatch(searchOff())}
         />
         <div>
-          <div id="profil" className="flex mb-4">
+          <div id="profil" className="flex md:ml-6 mb-4  min-w-20">
             <img src={user.picture} className="w-12 mr-2 rounded-full" />
             <div className="flex flex-col justify-center">
               <p className="font-bold">{user.firstname}</p>
@@ -68,7 +66,7 @@ function Home() {
           </div>
           <Button
             color="primary"
-            className="w-1/3"
+            className="w-1/3 mb-6 ml-3 md:ml-6"
             size="sm"
             onClick={() => handleLogout()}
           >
@@ -76,12 +74,17 @@ function Home() {
           </Button>
         </div>
       </div>
-      <div id="tweets" className="h-full w-5/12 flex flex-col">
-        {searchHashtags.status ? <Hashtag /> : <Tweet />}
+      <div
+        id="tweets"
+        className="h-screen w-5/12 flex flex-col custom-scrollbar overflow-auto"
+      >
+        {searchHashtags.status ? <Hashtag /> : <Tweet getTweet={getTweet} />}
         {tweetData &&
-          tweetData.map((tweet, index) => {
-            return <LastTweets id={index} tweet={tweet} />;
-          })}
+          tweetData
+            .sort((a, b) => new Date(b.time) - new Date(a.time))
+            .map((tweet, index) => {
+              return <LastTweets id={index} tweet={tweet} />;
+            })}
       </div>
       <Trends />
     </div>
