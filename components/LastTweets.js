@@ -5,11 +5,12 @@ var AdvancedFormat = require("dayjs/plugin/advancedFormat");
 var relativeTime = require("dayjs/plugin/relativeTime");
 // import "dayjs/locale/fr";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function LastTweets({ tweet }) {
   const [likers, setLikers] = useState([]);
   const user = useSelector((state) => state.user.value);
+  console.log(tweet);
 
   dayjs.locale("fr");
   dayjs.extend(AdvancedFormat);
@@ -31,6 +32,21 @@ function LastTweets({ tweet }) {
         return word;
       }
     });
+  }
+
+  function handleDelete() {
+    const tweetId = tweet._id;
+    fetch(`http://localhost:3000/tweets/${tweetId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Tweet supprimé, tchao !")
+    })
+
   }
 
   function likeTweet() {
@@ -92,14 +108,15 @@ function LastTweets({ tweet }) {
             icon={faHeart}
             style={heartIconStyle}
             className="w-3 h-3 mr-1 cursor-pointer "
-            onClick={likeTweet}
+            onClick={() => likeTweet()}
           />
           <p className="mr-2">{likers.length}</p>
 
-          <FontAwesomeIcon
+          {tweet.user._id === user.id && <FontAwesomeIcon
             icon={faTrashCan}
-            className="w-3 h-3 cursor-pointer "
-          />
+            className="w-3 h-3 cursor-pointer"
+            onClick={() => handleDelete()}
+          />}
         </div>
       </div>
     </div>
