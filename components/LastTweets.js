@@ -64,7 +64,7 @@ function LastTweets({  tweet, updateLikes, deleteTweet  }) {
             src={`${tweet.user.picture}`}
             className="w-12 mr-2 rounded-full cursor-pointer"
           />
-          <p className="text-slate-100 mr-1 cursor-pointer">
+          <p className="dark:text-slate-100 text-black mr-1 cursor-pointer">
             {tweet.user.firstname}{" "}
             <span className="text-gray-400 hover:underline ">
               @{tweet.user.username}

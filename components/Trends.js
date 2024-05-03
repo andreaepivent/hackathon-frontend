@@ -34,20 +34,22 @@ function Trends({ getTweet }) {
       <div className="flex justify-end">
         <ThemeSwitcher />
       </div>
-      <h1 className="font-bold mb-4">Trends</h1>
+      <h1 className="font-bold mb-4 dark:text-slate-100 text-black">Trends</h1>
 
       {hashtags && (
         <div className="dark:bg-[#1d2732] bg-[#e7e3e3] rounded-md text-sm flex flex-col">
           {hashtags.map((item, index) => (
             <div
               key={index}
-              className={`p-3 ${index === 0 ? "rounded-t-md" : ""} ${
+              className={`p-3 dark:text-slate-100 text-black ${
+                index === 0 ? "rounded-t-md" : ""
+              } ${
                 index === hashtags.length - 1 ? "rounded-b-md" : ""
               } cursor-pointer dark:hover:bg-[#283444] hover:bg-[#e7e3e3]`}
               onClick={() => fetchTweetFromHashtag(item.hashtag)}
             >
               <p className="font-bold mb-2 ">{item.hashtag}</p>
-              <p className="text-xs text-[#6a7783] ">
+              <p className="text-xs text-[#6a7783] dark:text-slate-100 text-black ">
                 {item.occurrence} tweets
               </p>
             </div>
