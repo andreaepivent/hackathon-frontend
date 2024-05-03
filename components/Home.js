@@ -43,6 +43,10 @@ function Home() {
     getTweet();
   }, [searchHashtags]);
 
+  if (!user.token) {
+    window.location.assign("http://localhost:3001/");
+  }
+
   return (
     <div className="bg-[#15202b] h-screen flex">
       <div
