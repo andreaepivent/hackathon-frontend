@@ -1,5 +1,6 @@
 import { Button } from "@nextui-org/button";
 import { useDisclosure } from "@nextui-org/react";
+import { useSelector } from "react-redux";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 
@@ -14,6 +15,12 @@ function Login() {
     onOpen: onOpenSignIn,
     onOpenChange: onOpenChangeSignIn,
   } = useDisclosure();
+
+  const user = useSelector((state) => state.user.value);
+
+  if (user.token) {
+    window.location.assign("home");
+  }
 
   return (
     <>
