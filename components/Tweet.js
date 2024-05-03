@@ -39,7 +39,7 @@ function Tweet({ getTweet }) {
   return (
     <div
       id="addTweet"
-      className="h-2/6 border-b border-[#2f3943] p-4 text-base"
+      className="h-2/6 border-b border-[#2f3943] p-4 text-base dark:bg-[#1d2732] bg-[#e7e3e3]"
     >
       <h1 className="font-bold mb-8">Home</h1>
 

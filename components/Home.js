@@ -46,7 +46,7 @@ function Home() {
   }
 
   return (
-    <div className="h-full w-full flex">
+    <div className="h-full w-full flex dark:bg-[#1d2732] bg-[#e7e3e3]">
       <div
         id="nav"
         className="h-screen w-3/12 border-r border-[#2f3943] flex flex-col justify-between p-4"

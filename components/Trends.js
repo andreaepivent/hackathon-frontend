@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchOn } from "../reducers/searchHashtags";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 function Trends({ getTweet }) {
   const dispatch = useDispatch();
@@ -30,16 +31,19 @@ function Trends({ getTweet }) {
       id="trends"
       className="h-screen custom-scrollbar overflow-auto w-4/12 border-l border-[#2f3943]  text-base p-4"
     >
+      <div className="flex justify-end">
+        <ThemeSwitcher />
+      </div>
       <h1 className="font-bold mb-4">Trends</h1>
 
       {hashtags && (
-        <div className="bg-[#1d2732] rounded-md text-sm flex flex-col">
+        <div className="dark:bg-[#1d2732] bg-[#e7e3e3] rounded-md text-sm flex flex-col">
           {hashtags.map((item, index) => (
             <div
               key={index}
               className={`p-3 ${index === 0 ? "rounded-t-md" : ""} ${
                 index === hashtags.length - 1 ? "rounded-b-md" : ""
-              } cursor-pointer hover:bg-[#283444]`}
+              } cursor-pointer dark:hover:bg-[#283444] hover:bg-[#e7e3e3]`}
               onClick={() => fetchTweetFromHashtag(item.hashtag)}
             >
               <p className="font-bold mb-2 ">{item.hashtag}</p>

@@ -16,7 +16,7 @@ function Hashtag() {
   return (
     <div
       id="addTweet"
-      className="h-1/6 border-b border-[#2f3943] p-4 text-base"
+      className="h-1/6 border-b border-[#2f3943] p-4 text-base dark:bg-[#1d2732] bg-[#e7e3e3] text-slate-500"
     >
       <h1 className="font-bold mb-4">Hashtag</h1>
 

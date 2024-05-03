@@ -77,7 +77,10 @@ function LastTweets({ tweet, getTweet }) {
   let heartIconStyle = likers.includes(user.id) ? { color: "#e74c3c" } : {};
 
   return (
-    <div id="allTweets" className="h-full border-b border-[#2f3943]">
+    <div
+      id="allTweets"
+      className="h-full border-b border-[#2f3943] dark:bg-[#1d2732] bg-[#e7e3e3] text-black dark:text-slate-100"
+    >
       <div className="border-b border-[#2f3943] p-4">
         <div className="flex mb-4 items-center">
           <img

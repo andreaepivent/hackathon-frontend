@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import Head from "next/head";
-
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { NextUIProvider } from "@nextui-org/react";
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -25,15 +25,17 @@ const persistor = persistStore(store);
 function App({ Component, pageProps }) {
   return (
     <NextUIProvider>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <Head>
-            <title>Hackatweet</title>
-            <link rel="icon" href="favicon.png" />
-          </Head>
-          <Component {...pageProps} />
-        </PersistGate>
-      </Provider>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <Head>
+              <title>Hackatweet</title>
+              <link rel="icon" href="favicon.png" />
+            </Head>
+            <Component {...pageProps} />
+          </PersistGate>
+        </Provider>
+      </NextThemesProvider>
     </NextUIProvider>
   );
 }
