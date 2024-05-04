@@ -9,6 +9,7 @@ export const ThemeSwitcher = () => {
     setLight(theme === "light");
   }, [theme]);
 
+  // test
   return (
     <div className="">
       {light ? (

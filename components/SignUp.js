@@ -23,6 +23,8 @@ function SignUp({ isOpen, onOpenChange }) {
   const [password, setPassword] = useState("");
   const [loader, setLoader] = useState(false);
 
+  // test useRef
+
   function fetchSignupData() {
     setLoader(true);
     const connectionData = {
